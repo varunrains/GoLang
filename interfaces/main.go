@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+//Some rules in INterfaces
+
+//Interfaces are not generic types
+//Interfaces are implicit --> For spanish or english bot you dont have to specify the bot
+//Like the way you do it for other languages
+//Interfaces are kind of contract which will help us re-define the type
+//Interfaces are tough so go through the documentation.
+
 type bot interface {
 	getGreeting() string
 }
