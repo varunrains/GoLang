@@ -4,24 +4,26 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+
+	"github.com/varunrains/golang/pkg/handlers"
 )
 
 const portNumber = ":8080"
 
-func Home(w http.ResponseWriter, r *http.Request) {
-	n, err := fmt.Fprintf(w, "Hello This is a home page")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println((fmt.Sprintf("Number of bytes written: %d", n)))
-}
+// func Home(w http.ResponseWriter, r *http.Request) {
+// 	n, err := fmt.Fprintf(w, "Hello This is a home page")
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	fmt.Println((fmt.Sprintf("Number of bytes written: %d", n)))
+// }
 
-func About(w http.ResponseWriter, r *http.Request) {
-	_, err := fmt.Fprintf(w, fmt.Sprintf("This is a about page and 2+2 is %d", addTwoValues(2, 2)))
-	if err != nil {
-		fmt.Println(err)
-	}
-}
+// func About(w http.ResponseWriter, r *http.Request) {
+// 	_, err := fmt.Fprintf(w, fmt.Sprintf("This is a about page and 2+2 is %d", addTwoValues(2, 2)))
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// }
 
 // Error handling
 func Divide(w http.ResponseWriter, r *http.Request) {
@@ -56,8 +58,9 @@ func main() {
 	// 	}
 	// 	fmt.Println((fmt.Sprintf("Number of bytes written: %d", n)))
 	// })
-	http.HandleFunc("/", Home)
-	http.HandleFunc("/about", About)
+
+	http.HandleFunc("/", handlers.Home)
+	http.HandleFunc("/about", handlers.About)
 	http.HandleFunc("/divide", Divide)
 	http.ListenAndServe(portNumber, nil)
 }
