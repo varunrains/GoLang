@@ -25,5 +25,6 @@ yarn-error.log*
 #Go SPecific
 *.exe
 db-data
+postgres-data
 *.stat
 *.conf
