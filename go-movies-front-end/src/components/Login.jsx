@@ -9,20 +9,46 @@ const Login = () => {
   const { setJwtToken } = useOutletContext();
   const { setAlertClassName } = useOutletContext();
   const { setAlertMessage } = useOutletContext();
+  const {toggleRefresh} = useOutletContext();
 
   const navigate  = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (email === "admin@example.com") {
-      setJwtToken("abc");
+    //build the request payload
+    let payload = {
+      email: email,
+      password: password,
+    }
+
+    const requestOptions = {
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json'
+      },
+      credentials: 'include',
+      body:JSON.stringify(payload),
+    }
+
+    try {
+      var response = await fetch("http://localhost:8080/authenticate", requestOptions);
+      var data = await response.json();
+
+      if(data?.message === 'invalid credentials'){
+        setAlertClassName("alert-danger");
+        setAlertMessage(data?.message);
+        return;
+      }
+toggleRefresh(true);
+      setJwtToken(data.access_token);
       setAlertClassName("d-none");
       setAlertMessage("");
       navigate("/");
-    } else{
-        setAlertClassName("alert-danger");
-        setAlertMessage("Invalid credentials!")
+    } catch (err) {
+      setAlertClassName("alert-danger");
+      setAlertMessage(err);
+      console.log(err);
     }
   };
 
